@@ -20,9 +20,6 @@ exports.getAllTours = async (req, res) => {
       .limitFields()
       .paginate();
 
-    console.log('f');
-    console.log(features);
-
     const tours = await features.query;
 
     res.status(200).json({
@@ -42,6 +39,7 @@ exports.getAllTours = async (req, res) => {
 };
 
 exports.getTour = async (req, res) => {
+  console.log(req.params.id);
   try {
     const tour = await Tour.findById(req.params.id);
 
