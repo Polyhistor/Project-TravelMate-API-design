@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Please provide a password'],
-    minLength: 8,
+    minlength: 8,
     select: false,
   },
   passwordConfirm: {
@@ -55,6 +55,13 @@ userSchema.pre('save', async function (next) {
   // delete password confirm field
   this.passwordConfirm = undefined;
 
+  next();
+});
+
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now();
   next();
 });
 
