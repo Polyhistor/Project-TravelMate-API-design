@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const { deleteOne } = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -34,7 +35,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // Note that we don't wanna update anything that user sends in req.body, thus we need to filter properties that are allowed to be updated
-  const filteredBody = filterObj(req.body, 'name', 'email');
+  const filteredBody = filterObj(req.body, 'name', 'email', 'role');
 
   // 2) Update the user document - setting New to true makes mongoose send back the new date not the old one
   const updateUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
@@ -80,9 +81,4 @@ exports.updateUser = (req, res) => {
   });
 };
 
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'this route is not yet defined',
-  });
-};
+exports.deleteUser = deleteOne(User);
