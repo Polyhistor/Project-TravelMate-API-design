@@ -49,7 +49,6 @@ exports.createOne = (Model) =>
 
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
-    console.log(popOptions);
     let query = Model.findById(req.params.id);
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
@@ -78,7 +77,7 @@ exports.getAll = (Model) =>
       .limitFields()
       .paginate();
 
-    const docs = await features.query.explain();
+    const docs = await features.query;
 
     res.status(200).json({
       status: 'success',
