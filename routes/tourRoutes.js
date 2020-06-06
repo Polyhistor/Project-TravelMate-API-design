@@ -8,6 +8,8 @@ const {
   aliasTopTours,
   getTourStats,
   getMonthlyPlan,
+  getToursWithin,
+  getDistances,
 } = require('../controllers/tourController');
 const { protect, restrictTo } = require('../controllers/authController');
 const reviewRouter = require('./reviewRoutes');
@@ -30,5 +32,9 @@ router
 // router.route('/:tourId/reviews').post(protect, restrictTo('user'), createReview);
 
 router.use('/:tourId/reviews', reviewRouter);
+
+router.route('/tours-within/:distance/center/:latlang/unit/:unit').get(getToursWithin);
+
+router.route('/distances/:latlng/unit/:unit').get(getDistances);
 
 module.exports = router;
