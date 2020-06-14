@@ -8,6 +8,8 @@ const {
   updateMe,
   deleteMe,
   getMe,
+  uploadUserPhoto,
+  resizeUserPhoto,
 } = require('../controllers/userController');
 const {
   signUp,
@@ -33,7 +35,7 @@ userRouter.use(protect);
 
 userRouter.route('/updatePassword').patch(updatePassword);
 userRouter.route('/me').get(getMe, getUser);
-userRouter.route('/updateMe').patch(updateMe);
+userRouter.route('/updateMe').patch(uploadUserPhoto, resizeUserPhoto, updateMe);
 userRouter.route('/deleteMe').delete(deleteMe);
 
 // Only routes defined after this middleware are restricted to admin

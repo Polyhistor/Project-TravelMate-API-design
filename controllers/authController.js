@@ -102,6 +102,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 3) Check if user still exists - this is for scenario in which user acc is deleted and toke still exists
   const currentUser = await User.findById(decoded.id);
+
   if (!currentUser) {
     return next(new AppError('The user belonging to the token does not exist any more!', 401));
   }
@@ -115,6 +116,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 5) Passing user data into next middleware
   req.user = currentUser;
+  res.locals.user = currentUser;
 
   // Final - grant access to protected route
   next();
