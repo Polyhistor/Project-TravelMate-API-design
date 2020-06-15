@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -69,6 +70,9 @@ app.use(
 
 // # 2 access to static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// # compressing text
+app.use(compression());
 
 // Routers
 app.use('/', viewRouter);
