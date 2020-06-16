@@ -8,11 +8,11 @@ const {
   getMyTours,
 } = require('../controllers/viewsController');
 const { isLoggedIn, protect } = require('../controllers/authController');
-const { createBookingCheckout } = require('../controllers/bookingController');
+// const { createBookingCheckout } = require('../controllers/bookingController');
 
 const viewRouter = express.Router();
 
-viewRouter.get('/', createBookingCheckout, isLoggedIn, getOverView);
+viewRouter.get('/', isLoggedIn, getOverView);
 viewRouter.get('/tour/:slug', isLoggedIn, getTour);
 viewRouter.get('/login', isLoggedIn, getLogin);
 viewRouter.get('/me', protect, getAccount);

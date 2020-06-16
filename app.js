@@ -17,6 +17,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const { webhookCheckout } = require('./controllers/bookingController');
 
 const app = express();
 
@@ -46,6 +47,9 @@ app.use('/api', limiter);
 app.use(cors());
 
 app.options('*', cors());
+
+// the respond that comes from Stripe hook should not be in JSON format, it only should be
+app.post('/webhook-checkout', bodyparser.raw({ type: 'application/json' }), webhookCheckout);
 
 // # 1 Body Parser - reading data from the body into req.body
 app.use(express.json({ limit: '10kb' }));
